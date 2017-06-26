@@ -43,3 +43,31 @@ console.timeEnd('time');
 ```
 12. console.profile();
 13. console.profileEnd();
+14. console.assert(boolean, 'contant'); // 断言, 第一个参数为false 时 输出
+
+## 控制台常用快捷键
+1. keys, values
+```
+var obj = {
+    name: 'zhangsan',
+    age: 18,
+    gender: 'male'
+};
+keys(obj);     // ["name", "age", "gender"]
+values(obj);   // ["zhangsan", 18, "male"]
+```
+2. copy
+```
+copy(document.body);
+```
+3. 上下键切换历史命令
+4. $_ 最近一次执行命令的结果
+5. $0-$5 选中的标签
+6. monitor  unmonitor  // 检测入参
+7. $ 用法
+```
+$       // document.querySelector
+$$      // document.querySelectorAll
+$_      // 上一个表达式的值
+$0 - $4 // 最近5个Elements面板选中的DOM元素
+```
