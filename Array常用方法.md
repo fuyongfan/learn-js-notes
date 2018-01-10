@@ -111,3 +111,4 @@ var res = ary.reduce((pre, cur, index, ary) => {
 });
 console.log(ary, res); // [0, 1, 2, 3, 4, 5] 15
 ```
+7. indexOf lastIndexOf
