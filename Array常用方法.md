@@ -101,8 +101,20 @@ var ary = [0, 1, 2, 3, 4, 5];
 ary.filter((item, index, ary) => item > 3) // [4, 5]
 ary.filter((item, index, ary) => item > 5) // []
 ```
-### 以上5个方法均不会改变原数组，并且回调中都有3个参数 ———— item, index, ary
-6. reduce 和reduceRight 接受参数 ———— pre, cur, index, ary
+6. findIndex 遍历每一项，其中一项符合条件，则返回该项对应的索引并结束遍历
+```
+var ary = [1, 2, 3, 4, 5];
+var res = ary.findIndex((item, index, ary) => {
+    console.log(item, index, ary);
+    return item === 2;
+});
+console.log(ary, res);
+1 0 [ 1, 2, 3, 4, 5 ]
+2 1 [ 1, 2, 3, 4, 5 ]
+[ 1, 2, 3, 4, 5 ] 1
+```
+#### 以上6个方法均不会改变原数组，并且回调中都有3个参数 ———— item, index, ary
+7. reduce 和reduceRight 接受参数 ———— pre, cur, index, ary
 ```
 var ary = [0, 1, 2, 3, 4, 5];
 var res = ary.reduce((pre, cur, index, ary) => {
