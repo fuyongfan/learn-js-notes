@@ -39,7 +39,7 @@ console.log(ary, res); // [0, 1, 2, 3, 4, 5] [1, 2]
 ```
 var ary = [0, 1, 2, 3, 4, 5];
 var res = ary.splice(1, 2, 1, 1, 1);
-console.log(ary, res); // [0, 6, 6, 6, 3, 4, 5] [1, 2]
+console.log(ary, res); // [0, 1, 1, 1, 3, 4, 5] [1, 2]
 ```
 ## join
 原数组不变， 数组中的每一项分别调用toString方法，然后拼接起来作为返回值
@@ -124,3 +124,131 @@ var res = ary.reduce((pre, cur, index, ary) => {
 console.log(ary, res); // [0, 1, 2, 3, 4, 5] 15
 ```
 7. indexOf lastIndexOf
+
+## 数组中扩展方法
+1. 扩展运算符
+```
+let ary = [1, 2, 3];
+console.log(...ary);
+// 1, 2, 3
+```
+- 可以添加表达式
+```
+let foo = true;
+let ary = [
+    ...(foo ? [1, 2, 3] : [])
+];
+console.log(ary); // [1, 2, 3]
+```
+- 复制数组
+```
+let arr1 = [1, 2, 3];
+let arr2 = [...arr1];
+let [...arr2] = arr1;
+arr2[0] = 12;
+console.log(arr1, arr2); // [ 1, 2, 3 ] [ 12, 2, 3 ]
+```
+- 拼接数组
+```
+let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let arr3 = [...arr1, ...arr2];
+console.log(arr3); // [ 1, 2, 3, 4, 5, 6 ]
+```
+- 将字符串转换成数组
+```
+let str = 'hello';
+let arr = [...str];
+console.log(arr); // [ 'h', 'e', 'l', 'l', 'o' ]
+```
+- 实现了 Iterator 接口的对象
+```
+let nodeList = document.querySelectorAll('div');
+let array = [...nodeList];
+```
+
+2. Array.from
+```
+let arrayLike = {
+    '0': 'a',
+    '1': 'b',
+    '2': 'c',
+    length: 3
+};
+
+// ES5的写法
+var arr1 = [].slice.call(arrayLike); // ['a', 'b', 'c']
+
+// ES6的写法
+let arr2 = Array.from(arrayLike); // ['a', 'b', 'c']
+```
+- Array.from, 可以接收第二个参数， 类似于 Array.from(arrLike).map();
+```
+let arrLike = {
+    0: 0,
+    1: 1,
+    2: 2,
+    length: 3
+};
+let arr = Array.from(arrLike, item => item + 1);
+console.log(arr); // [ 1, 2, 3 ]
+```
+3. Array.of 
+```
+Array.of(); // []
+Array.of(undefined); // [undefined]
+Array.of(1, 2); // [1, 2]
+```
+4. Array.copyWithin(target, start, end);
+5. Array.find();  与 filter 区别
+```
+let arr = [1, 2, 3, 4, 5];
+
+let res = arr.filter(item => item === 3);
+
+console.log(res); // [3]
+```
+```
+let arr = [1, 2, 3, 4, 5];
+
+let res = arr.find(item => item === 3);
+
+console.log(res); // 3
+```
+- find 找到第一个则停止查找， 没找到返回 undefined
+- findIndex 找到第一个则停止查找， 没找到返回 -1
+- find 和 findIndex 接收第二个参数， 绑定回调函数 this 指向
+
+```
+function f(v){
+  return v > this.age;
+}
+let person = {name: 'John', age: 20};
+[10, 12, 26, 15].find(f, person);    // 26
+```
+- 另外，这两个方法都可以发现NaN，弥补了数组的indexOf方法的不足。
+```
+[NaN].indexOf(NaN)
+// -1
+
+[NaN].findIndex(y => Object.is(NaN, y))
+// 0
+```
+6. Array.fill()
+```
+let arr = [1, 2, 3, 4, 5];
+arr.fill('hello', 0, 2);
+console.log(arr); // [ 'hello', 'hello', 3, 4, 5 ]
+```
+7. keys() values() entries()
+```
+let arr = [1, 2, 3];
+for (let key of arr.keys()) {
+    console.log(key);
+} // 0, 1, 2
+```
+8. Array.includes();
+```
+let arr = [1, 2, 3, NaN];
+console.log(arr.includes(NaN)); // true
+```
